@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Logged out{% endblock %}
+{% block content %}
+<div class="block" style="width: 600px; margin-left: auto; margin-right: auto;">
+    <div class="box">
+        <p style="line-height:4em">شما با موفقیت خارج شدید </p>
+         <a href="{% url 'account:login' %}" class="button is-info">ورود دوباره</a>.
+    </div>
+</div>
+
+{% endblock %}

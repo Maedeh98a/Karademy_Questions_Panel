@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="block" style="width: 800px; margin-left: auto; margin-right: auto;">
+    <div class="box">
+        <h1 class="title is-3" style="text-align:center"><strong>با طرح سوالت از اصغر زودتر به جواب برس</strong></h1>
+    </div>
+</div>
+
+<div class="block" style="width: 800px; margin-left: auto; margin-right: auto;">
+    <div class="box">
+        <form action="" method="post">
+             {% csrf_token %}
+                <div class="field">
+                {{form.as_p}}
+                </div>
+                    <div class="block">
+                        <div class="box">
+                            <div class="container"style="width: 400px; margin-left: auto; margin-right: auto;">
+                                <input type="submit" value="ثبت سوال" class="button is-success">
+                            </div>
+                        </div>
+                    </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

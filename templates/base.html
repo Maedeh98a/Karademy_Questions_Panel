@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+        <a class="navbar-item" href="{% url 'home' %}">صفحه اصلی</a>
+        <a class="navbar-item" href="{% url 'questions:question_list' %}">سوالات</a>
+        <a class="navbar-item" href="{% url 'account:dashboard' %}">پروفایل</a>
+    <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">از اصغر بپرس:</a>
+      <div class="navbar-dropdown">
+          <a class="navbar-item" href="{% url 'questions:create_question' %}">سوالت را بپرس</a>
+          <a class="navbar-item" href="{% url 'questions:my_question' %}" class="button is-info">سوالات من</a>
+          <a class="navbar-item">پاسخ بده</a>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+           <a class="button is-primary" href="{% url 'account:login' %}"><strong>ورود</strong></a>
+          <a class="button is-light" href="{% url 'account:logout' %}">خروج</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+{% block content %}
+
+{% endblock %}
+
+<footer class="card-footer">
+    <p class="card-footer-item">
+        <span>
+            ما را در توییتر دنبال کنید <a href="#"><i class="fa fa-twitter"</i></a>
+        </span>
+    </p>
+</footer>
+</body>
+</html>

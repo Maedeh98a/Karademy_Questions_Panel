@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}ورود{% endblock %}
+{% block content %}
+{% if form.errors %}
+    <p>نام کاربری و رمز عبور شما مطابقت ندارد. دوباره تلاش کنید</p>
+{% else %}
+    <p>برای ورود نام کاربری و رمز عبور خود را در فرم زیر وارد کنید</p>
+{% endif %}
+
+<form action="{% url 'account:login' %}" method="post">
+{% csrf_token %}
+    <tr>
+        <td><label for="user">نام کاربری</label><br></td>
+        <td id="user">{{form.username}}</td>
+    </tr>
+    <hr>
+    <tr>
+        <td><label for="pass1">رمز عبور</label><br></td>
+        <td id="pass1">{{form.password}}</td>
+    </tr>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <p><input type="submit" value="ورود"></p>
+</form>
+{% endblock %}
