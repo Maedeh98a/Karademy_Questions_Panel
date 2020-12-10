@@ -25,5 +25,11 @@ class AnswerAdmin(admin.ModelAdmin):
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ['user', 'reported_question', 'reported_answer', 'report_choice', 'report_date']
-    search_fields = ['reported_question', 'reported_answer', 'report_date']
+    list_display = [
+        "user",
+        "reported_question",
+        "reported_answer",
+        "report_choice",
+        "report_date",
+    ]
+    search_fields = ["reported_question", "reported_answer", "report_date"]
