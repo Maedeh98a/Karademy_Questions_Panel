@@ -15,7 +15,7 @@ class Profile(models.Model):
         null=True,
         blank=True,
     )
-    interests = models.ManyToManyField(Category, verbose_name="", blank=True, null=True)
+    interests = models.ManyToManyField(Category, verbose_name="علاقه مندی ها", blank=True)
     avatar = models.ImageField(
         upload_to="user/%Y/%m/%d", verbose_name="آواتار", null=True, blank=True
     )
