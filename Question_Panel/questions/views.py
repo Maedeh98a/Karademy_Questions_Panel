@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import QuestionForm, AnswerForm
-from .models import Question
+from .forms import QuestionForm, QuestionReportForm, AnswerReportForm, AnswerForm
+from .models import Question, Answer, AnswerReport, QuestionReport
 from django.views.generic import ListView
 from django.contrib.auth.models import User
 
@@ -88,3 +88,37 @@ def delete_question(request, pk):
         return redirect("/")
     context = {"item": question}
     return render(request, "questions/delete.html", context)
+
+
+@login_required()
+def report_question(request, pk):
+    question = Question.objects.get(id=pk)
+    form = QuestionReportForm()
+    if request.method == "POST":
+        form = QuestionReportForm(request.POST)
+        if form.is_valid():
+            new_report = form.save()
+            new_report.user = request.user
+            new_report.reported_question = Question.objects.get(id=pk)
+            new_report.save()
+            return redirect("questions:question_list")
+    return render(
+        request, "questions/report.html", {"form": form, "question": question}
+    )
+
+
+@login_required()
+def report_answer(request, pk):
+    answer = Answer.objects.get(id=pk)
+    form = AnswerReportForm()
+    if request.method == "POST":
+        form = AnswerReportForm(request.POST)
+        if form.is_valid():
+            new_report = form.save()
+            new_report.user = request.user
+            new_report.reported_answer = Answer.objects.get(id=pk)
+            new_report.save()
+            return redirect("questions:question_list")
+    return render(
+        request, "questions/answer_report.html", {"form": form, "answer": answer}
+    )

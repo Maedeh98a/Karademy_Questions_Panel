@@ -9,6 +9,6 @@ urlpatterns = [
     path("create_question/", views.create_question, name="create_question"),
     path("update_question/<str:pk>", views.update_question, name="update_question"),
     path("delete_question/<str:pk>", views.delete_question, name="delete_question"),
-    path("<str:slug>", views.delete_question, name="detail_question"),
-
+    path("report_question/<str:pk>", views.report_question, name="report_question"),
+    path("<str:slug>", views.create_answer, name="detail_question"),
 ]

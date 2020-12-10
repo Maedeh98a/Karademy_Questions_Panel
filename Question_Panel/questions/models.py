@@ -87,12 +87,8 @@ class Question(models.Model):
         return reverse("questions:detail_question", kwargs={"slug": self.slug})
 
 
-# class Tags(models.Model):
-#     tag_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='برچسب')
-
-
 class Answer(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, verbose_name="پاسخ دهنده"
     )
     question = models.ForeignKey(
@@ -118,8 +114,10 @@ class Answer(models.Model):
         return self.question.question_title
 
 
-class Report(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="گزارش دهنده")
+class QuestionReport(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, verbose_name="گزارش دهنده"
+    )
     reported_question = models.ForeignKey(
         Question,
         null=True,
@@ -127,7 +125,37 @@ class Report(models.Model):
         on_delete=models.CASCADE,
         verbose_name="سوال گزارش شده",
     )
-    # I got problem here ...
+    reported_answer = models.ForeignKey(
+                Answer,
+                null=True,
+                blank=True,
+                on_delete=models.CASCADE,
+                verbose_name="پاسخ گزارش شده",
+            )
+    report_choice = models.CharField(
+        max_length=30,
+        choices=REPORT_CHOICES,
+        blank=False,
+        null=True,
+        verbose_name="گزینه های گزارش",
+    )
+    report_description = models.TextField(
+        blank=True, null=True, verbose_name="متن گزارش"
+    )
+    report_date = models.DateTimeField(auto_now=True, verbose_name="تاریخ گزارش")
+    report_count = models.IntegerField(
+        verbose_name="تعداد گزارش", null=True, blank=True
+    )
+
+    class Meta:
+        verbose_name = "گزارش سوال "
+        verbose_name_plural = "گزارش سوال ها"
+
+
+class AnswerReport(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, verbose_name="گزارش دهنده"
+    )
     reported_answer = models.ForeignKey(
         Answer,
         null=True,
@@ -146,4 +174,10 @@ class Report(models.Model):
         blank=True, null=True, verbose_name="متن گزارش"
     )
     report_date = models.DateTimeField(auto_now=True, verbose_name="تاریخ گزارش")
-    report_count = models.IntegerField(verbose_name="تعداد گزارش")
+    report_count = models.IntegerField(
+        verbose_name="تعداد گزارش", null=True, blank=True
+    )
+
+    class Meta:
+        verbose_name = "گزارش پاسخ"
+        verbose_name_plural = "گزارش های پاسخ ها"

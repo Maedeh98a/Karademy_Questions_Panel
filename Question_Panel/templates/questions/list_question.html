@@ -27,6 +27,8 @@
                     </div>
                     <div class="container">
                         <a href="{{ question.get_absolute_url }}" class="button is-primary">پاسخ</a>
+<!--                        <a href="{% url 'questions:report_question' question.id %}" class="button is-warning">گزارش</a>-->
+
 {% if request.user.username == question.user.username %}
             <a href="{% url 'questions:update_question' question.id %}" class="button is-info">به روز رسانی</a>
             <a href="{% url 'questions:delete_question' question.id %}" class="button is-danger">حذف سوال</a>
@@ -44,3 +46,5 @@
 </div>
 {% endfor %}
 {% endblock %}
+
+# like 176
