@@ -8,11 +8,11 @@ STATUS_CHOICE = (
     ('draft', 'پیش نویس'))
 
 REPORT_CHOICES = (
-    ('inappropiate', 'نامناسب'),
-    ('', 'بی ربط'),
-    ('', 'حاوی الفاظ سیاسی'),
-    ('', 'تبلیغ'),
-    ('other', ''),
+    ('inappropriate', 'نامناسب'),
+    ('irrelevant', 'بی ربط'),
+    ('Contains political words', 'حاوی الفاظ سیاسی'),
+    ('Contains ads', 'تبلیغ'),
+    ('other', 'دیگر'),
 
 )
 
