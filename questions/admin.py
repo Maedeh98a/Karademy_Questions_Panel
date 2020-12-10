@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Category, Answer
+from .models import Question, Category, Answer, Report
 
 
 @admin.register(Question)
@@ -21,3 +21,9 @@ class CategoryAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ["user", "question", "created_time", "updated_time"]
     search_fields = ["user", "question", "created_time", "updated_time"]
+
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ['user', 'reported_question', 'reported_answer', 'report_choice', 'report_date']
+    search_fields = ['reported_question', 'reported_answer', 'report_date']
