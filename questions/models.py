@@ -3,17 +3,14 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
 
-STATUS_CHOICE = (
-    ('published', 'انتشاریافته'),
-    ('draft', 'پیش نویس'))
+STATUS_CHOICE = (("published", "انتشاریافته"), ("draft", "پیش نویس"))
 
 REPORT_CHOICES = (
-    ('inappropriate', 'نامناسب'),
-    ('irrelevant', 'بی ربط'),
-    ('Contains political words', 'حاوی الفاظ سیاسی'),
-    ('Contains ads', 'تبلیغ'),
-    ('other', 'دیگر'),
-
+    ("inappropriate", "نامناسب"),
+    ("irrelevant", "بی ربط"),
+    ("Contains political words", "حاوی الفاظ سیاسی"),
+    ("Contains ads", "تبلیغ"),
+    ("other", "دیگر"),
 )
 
 
@@ -63,7 +60,12 @@ class Question(models.Model):
         auto_now_add=True, null=True, db_index=True, verbose_name="تاریخ به روز رسانی"
     )
     status = models.CharField(
-        max_length=12, choices=STATUS_CHOICE, default='published', null=True, verbose_name='وضعیت انتشار')
+        max_length=12,
+        choices=STATUS_CHOICE,
+        default="published",
+        null=True,
+        verbose_name="وضعیت انتشار",
+    )
     question_photo = models.ImageField(
         upload_to="question/%Y/%m/%d", blank=True, null=True, verbose_name="تصویر سوال"
     )
@@ -82,7 +84,8 @@ class Question(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("questions:detail_question", kwargs={'slug': self.slug})
+        return reverse("questions:detail_question", kwargs={"slug": self.slug})
+
 
 # class Tags(models.Model):
 #     tag_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='برچسب')
@@ -99,8 +102,12 @@ class Answer(models.Model):
     created_time = models.DateTimeField(auto_now=True, null=True)
     updated_time = models.DateTimeField(auto_now=True, null=True)
     status = models.CharField(
-        max_length=12, choices=STATUS_CHOICE, default='published', null=True,
-        verbose_name='وضعیت انتشار')
+        max_length=12,
+        choices=STATUS_CHOICE,
+        default="published",
+        null=True,
+        verbose_name="وضعیت انتشار",
+    )
 
     class Meta:
         db_table = "Answers"
@@ -112,11 +119,31 @@ class Answer(models.Model):
 
 
 class Report(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='گزارش دهنده')
-    reported_question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, verbose_name='سوال گزارش شده')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="گزارش دهنده")
+    reported_question = models.ForeignKey(
+        Question,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        verbose_name="سوال گزارش شده",
+    )
     # I got problem here ...
-    reported_answer = models.ForeignKey(Answer, null=True, blank=True, on_delete=models.CASCADE, verbose_name='پاسخ گزارش شده')
-    report_choice = models.CharField(max_length=30, choices=REPORT_CHOICES, blank=False, null=True, verbose_name='گزینه های گزارش')
-    report_description = models.TextField(blank=True, null=True, verbose_name='متن گزارش')
-    report_date = models.DateTimeField(auto_now=True, verbose_name='تاریخ گزارش')
-    report_count = models.IntegerField(verbose_name='تعداد گزارش')
+    reported_answer = models.ForeignKey(
+        Answer,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        verbose_name="پاسخ گزارش شده",
+    )
+    report_choice = models.CharField(
+        max_length=30,
+        choices=REPORT_CHOICES,
+        blank=False,
+        null=True,
+        verbose_name="گزینه های گزارش",
+    )
+    report_description = models.TextField(
+        blank=True, null=True, verbose_name="متن گزارش"
+    )
+    report_date = models.DateTimeField(auto_now=True, verbose_name="تاریخ گزارش")
+    report_count = models.IntegerField(verbose_name="تعداد گزارش")
