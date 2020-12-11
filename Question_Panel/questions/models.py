@@ -76,7 +76,7 @@ class Question(models.Model):
         verbose_name_plural = "سوال ها"
 
     def __str__(self):
-        return self.question_title
+        return str(self.question_title)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -84,7 +84,7 @@ class Question(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("questions:detail_question", kwargs={"slug": self.slug})
+        return reverse("questions:question_detail", kwargs={"slug": self.slug})
 
 
 class Answer(models.Model):
@@ -92,15 +92,15 @@ class Answer(models.Model):
         User, on_delete=models.CASCADE, null=True, verbose_name="پاسخ دهنده"
     )
     question = models.ForeignKey(
-        Question, on_delete=models.CASCADE, verbose_name="سوال"
+        Question, on_delete=models.CASCADE, verbose_name="سوال", related_name='answers'
     )
-    answer = models.TextField(null=True, blank=False, verbose_name="پاسخ")
+    answer_body = models.TextField(null=True, blank=False, verbose_name="پاسخ")
     created_time = models.DateTimeField(auto_now=True, null=True)
     updated_time = models.DateTimeField(auto_now=True, null=True)
     status = models.CharField(
         max_length=12,
         choices=STATUS_CHOICE,
-        default="published",
+        default="draft",
         null=True,
         verbose_name="وضعیت انتشار",
     )
@@ -111,7 +111,7 @@ class Answer(models.Model):
         verbose_name_plural = "پاسخ ها"
 
     def __str__(self):
-        return self.question.question_title
+        return str(self.question.question_title)
 
 
 class QuestionReport(models.Model):
