@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Category
+from .models import Question, Category, Answer, QuestionReport, AnswerReport
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
@@ -15,19 +15,30 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("category_name",)}
     search_fields = ["category_name", "created_time", "updated_time"]
 
-#
-# @admin.register(Answer)
-# class AnswerAdmin(admin.ModelAdmin):
-#     list_display = ["user", "question", "created_time", "updated_time"]
-#     search_fields = ["user", "question", "created_time", "updated_time"]
-#
-#
-# @admin.register(Report)
-# class ReportAdmin(admin.ModelAdmin):
-#     list_display = [
-#         "user",
-#         "reported_question",
-#         "report_choice",
-#         "report_date",
-#     ]
-#     search_fields = ["reported_question", "report_date"]
+
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ["user", "question", "created_time", "updated_time"]
+    search_fields = ["user", "question", "created_time", "updated_time"]
+
+
+@admin.register(QuestionReport)
+class QuestionReportAdmin(admin.ModelAdmin):
+    list_display = [
+        "user",
+        "reported_question",
+        "report_choice",
+        "report_date",
+    ]
+    search_fields = ["reported_question", "report_date"]
+
+
+@admin.register(AnswerReport)
+class QuestionReportAdmin(admin.ModelAdmin):
+    list_display = [
+        "user",
+        "reported_answer",
+        "report_choice",
+        "report_date",
+    ]
+    search_fields = ["reported_answer", "report_date"]
