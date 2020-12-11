@@ -39,31 +39,41 @@ def create_question(request):
 
 
 @login_required()
-def create_answer(request, **kwargs):
-    question = get_object_or_404(Question, **kwargs)
-    answers = question.answers.all()
+def create_answer(request, pk):
+    question = get_object_or_404(Question, id=pk)
     new_answer = None
     form = AnswerForm()
     if request.method == "POST":
         form = AnswerForm(data=request.POST)
         if form.is_valid():
-            new_answer = form.save()
-            new_answer.question = question
+            # question_form = QuestionForm().save()
+            new_answer = form.save(commit=False)
+            new_answer.question = Question.objects.get(id=pk)
             new_answer.user = request.user
+            # new_answer.question = question_form
             new_answer.save()
             return redirect("/")
     else:
         form = AnswerForm
     return render(
         request,
-        "questions/question_detail.html",
+        "questions/create_answer.html",
         {
             "questions": question,
-            "answers": answers,
             "new_answer": new_answer,
             "form": form,
         },
     )
+
+
+def detail(request, pk):
+    question = get_object_or_404(Question, id=pk)
+    answers = question.answers.all()
+    context = {'question': question, 'answers': answers}
+    return render(request, 'questions/question_detail.html',context)
+
+
+
 
 
 @login_required()
@@ -103,7 +113,7 @@ def report_question(request, pk):
             new_report.save()
             return redirect("questions:question_list")
     return render(
-        request, "questions/report.html", {"form": form, "question": question}
+        request, "questions/question_report.html", {"form": form, "question": question}
     )
 
 

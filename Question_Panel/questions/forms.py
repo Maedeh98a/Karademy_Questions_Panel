@@ -11,7 +11,7 @@ class QuestionForm(ModelForm):
 class AnswerForm(ModelForm):
     class Meta:
         model = Answer
-        fields = ["answer"]
+        fields = ["answer_body"]
 
 
 class QuestionReportForm(ModelForm):
