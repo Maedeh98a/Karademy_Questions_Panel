@@ -10,5 +10,7 @@ urlpatterns = [
     path("update_question/<str:pk>", views.update_question, name="update_question"),
     path("delete_question/<str:pk>", views.delete_question, name="delete_question"),
     path("report_question/<str:pk>", views.report_question, name="report_question"),
-    path("<str:slug>", views.create_answer, name="detail_question"),
+    path("create/<str:pk>", views.create_answer, name="create_answer"),
+    path("detail/<str:pk>", views.detail, name="question_detail"),
+
 ]
