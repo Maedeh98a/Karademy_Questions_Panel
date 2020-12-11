@@ -1,20 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{% load crispy_forms_tags %}
 
 
-<!--<h1>{{ question.user.email }}</h1>-->
-<!--<h1>{{ question.interest_major}}</h1>-->
+<div class="block">
+    <div class="box">
 
+        <p>{{ question.question_title }}</p>
+        {% for each_answer in answers  %}
+           <div class="box">
+                 <p>{{ each_answer.answer_body }}</p>
 
-
-
-
-<form method="post">
-{{ form }}
-{% csrf_token %}
-<p><input type="submit" value="Add comment"></p>
-</form>
-{% endif %}
+           </div>
+{% endfor%}
+    </div>
+</div>
 {% endblock %}

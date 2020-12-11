@@ -26,8 +26,9 @@
                         <p style="line-height:4em">این سوال در تاریخ {{ question.created_time }} توسط {{ question.user.username }}  پرسیده شده است </p>
                     </div>
                     <div class="container">
-                        <a href="{{ question.get_absolute_url }}" class="button is-primary">پاسخ</a>
-<!--                        <a href="{% url 'questions:report_question' question.id %}" class="button is-warning">گزارش</a>-->
+                        <a href="{% url 'questions:create_answer' question.id %}" class="button is-warning"> پاسخ</a>
+                        <a href="{% url 'questions:report_question' question.id %}" class="button is-warning">گزارش</a>
+                        <a href="{% url 'questions:question_detail' question.id %}" class="button is-info">detail</a>
 
 {% if request.user.username == question.user.username %}
             <a href="{% url 'questions:update_question' question.id %}" class="button is-info">به روز رسانی</a>
