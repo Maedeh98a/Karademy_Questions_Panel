@@ -15,14 +15,14 @@ REPORT_CHOICES = (
 
 
 class Category(models.Model):
-    parent = models.ForeignKey(
-        "self",
-        on_delete=models.CASCADE,
-        verbose_name="دسته بندی ها",
-        blank=True,
-        default=None,
-        null=True,
-    )
+    # parent = models.ForeignKey(
+    #     "self",
+    #     on_delete=models.CASCADE,
+    #     verbose_name="دسته بندی ها",
+    #     blank=True,
+    #     default=None,
+    #     null=True,
+    # )
     category_name = models.CharField(
         max_length=100, null=True, verbose_name="نام دسته بندی"
     )
@@ -32,7 +32,7 @@ class Category(models.Model):
     updated_time = models.DateTimeField(
         auto_now_add=True, null=True, db_index=True, verbose_name="تاریخ به روز رسانی"
     )
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, allow_unicode=True)
 
     class Meta:
         db_table = "Category"
@@ -43,6 +43,21 @@ class Category(models.Model):
         return self.category_name
 
 
+class Tag(models.Model):
+    tag_name = models.CharField(max_length=12, blank=True, verbose_name='برچسب ها')
+    slug = models.SlugField(null=True, allow_unicode=True)
+    created_time = models.DateTimeField(auto_now=True, null=True, verbose_name='تاریخ ایجاد')
+    updated_time = models.DateTimeField(auto_now=True, null=True, verbose_name='تاریخ به روزرسانی')
+
+    class Meta:
+        db_table = 'tags'
+        verbose_name = 'برچسب'
+        verbose_name_plural = 'برچسب ها'
+
+    def __str__(self):
+        return self.tag_name
+
+
 class Question(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, verbose_name="سوال کننده"
@@ -50,9 +65,10 @@ class Question(models.Model):
     question_title = models.CharField(
         max_length=200, null=True, blank=False, verbose_name="عنوان سوال"
     )
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, allow_unicode=True)
     question_text = models.TextField(blank=False, null=True, verbose_name="متن سوال")
-    question_category = models.ManyToManyField(Category, verbose_name="دسته بندی سوال")
+    question_category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, verbose_name="دسته بندی سوال")
+    question_tag = models.ManyToManyField(Tag,blank=True, verbose_name="برچسب")
     created_time = models.DateTimeField(
         auto_now_add=True, null=True, db_index=True, verbose_name=" تاریخ ایجاد"
     )
@@ -181,3 +197,4 @@ class AnswerReport(models.Model):
     class Meta:
         verbose_name = "گزارش پاسخ"
         verbose_name_plural = "گزارش های پاسخ ها"
+
