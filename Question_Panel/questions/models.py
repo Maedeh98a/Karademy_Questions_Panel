@@ -44,15 +44,19 @@ class Category(models.Model):
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=12, blank=True, verbose_name='برچسب ها')
-    slug = models.SlugField(null=True, allow_unicode=True)
-    created_time = models.DateTimeField(auto_now=True, null=True, verbose_name='تاریخ ایجاد')
-    updated_time = models.DateTimeField(auto_now=True, null=True, verbose_name='تاریخ به روزرسانی')
+    tag_name = models.CharField(max_length=12, blank=True, verbose_name="برچسب ها")
+    # check again : slug = models.SlugField(null=True, allow_unicode=True)
+    created_time = models.DateTimeField(
+        auto_now=True, null=True, verbose_name="تاریخ ایجاد"
+    )
+    updated_time = models.DateTimeField(
+        auto_now=True, null=True, verbose_name="تاریخ به روزرسانی"
+    )
 
     class Meta:
-        db_table = 'tags'
-        verbose_name = 'برچسب'
-        verbose_name_plural = 'برچسب ها'
+        db_table = "tags"
+        verbose_name = "برچسب"
+        verbose_name_plural = "برچسب ها"
 
     def __str__(self):
         return self.tag_name
@@ -67,8 +71,10 @@ class Question(models.Model):
     )
     slug = models.SlugField(null=True, allow_unicode=True)
     question_text = models.TextField(blank=False, null=True, verbose_name="متن سوال")
-    question_category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, verbose_name="دسته بندی سوال")
-    question_tag = models.ManyToManyField(Tag,blank=True, verbose_name="برچسب")
+    question_category = models.ForeignKey(
+        Category, null=True, on_delete=models.CASCADE, verbose_name="دسته بندی سوال"
+    )
+    question_tag = models.ManyToManyField(Tag, blank=True, verbose_name="برچسب")
     created_time = models.DateTimeField(
         auto_now_add=True, null=True, db_index=True, verbose_name=" تاریخ ایجاد"
     )
@@ -108,7 +114,7 @@ class Answer(models.Model):
         User, on_delete=models.CASCADE, null=True, verbose_name="پاسخ دهنده"
     )
     question = models.ForeignKey(
-        Question, on_delete=models.CASCADE, verbose_name="سوال", related_name='answers'
+        Question, on_delete=models.CASCADE, verbose_name="سوال", related_name="answers"
     )
     answer_body = models.TextField(null=True, blank=False, verbose_name="پاسخ")
     created_time = models.DateTimeField(auto_now=True, null=True)
@@ -142,12 +148,12 @@ class QuestionReport(models.Model):
         verbose_name="سوال گزارش شده",
     )
     reported_answer = models.ForeignKey(
-                Answer,
-                null=True,
-                blank=True,
-                on_delete=models.CASCADE,
-                verbose_name="پاسخ گزارش شده",
-            )
+        Answer,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        verbose_name="پاسخ گزارش شده",
+    )
     report_choice = models.CharField(
         max_length=30,
         choices=REPORT_CHOICES,
@@ -197,4 +203,3 @@ class AnswerReport(models.Model):
     class Meta:
         verbose_name = "گزارش پاسخ"
         verbose_name_plural = "گزارش های پاسخ ها"
-
