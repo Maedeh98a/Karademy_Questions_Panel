@@ -10,24 +10,63 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('questions', '0001_initial'),
+        ("questions", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Profile',
+            name="Profile",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('gender', models.CharField(blank=True, choices=[('male', 'مرد'), ('female', 'زن')], max_length=6, null=True, verbose_name='جنسیت')),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to='user/%Y/%m/%d', verbose_name='آواتار')),
-                ('interests', models.ManyToManyField(blank=True, to='questions.Category', verbose_name='علاقه مندی ها')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='نام کاربر')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "gender",
+                    models.CharField(
+                        blank=True,
+                        choices=[("male", "مرد"), ("female", "زن")],
+                        max_length=6,
+                        null=True,
+                        verbose_name="جنسیت",
+                    ),
+                ),
+                (
+                    "avatar",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to="user/%Y/%m/%d",
+                        verbose_name="آواتار",
+                    ),
+                ),
+                (
+                    "interests",
+                    models.ManyToManyField(
+                        blank=True,
+                        to="questions.Category",
+                        verbose_name="علاقه مندی ها",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="نام کاربر",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'پروفایل',
-                'verbose_name_plural': 'پروفایل ها',
-                'db_table': 'profile',
+                "verbose_name": "پروفایل",
+                "verbose_name_plural": "پروفایل ها",
+                "db_table": "profile",
             },
         ),
     ]
