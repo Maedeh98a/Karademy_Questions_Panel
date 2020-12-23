@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load jalali_tags %}
+
+<div class="block" style="width: 1200px; margin-left: auto; margin-right: auto;">
+    <div class="box">
+        <form method="post">
+            {{ form.media }}
+            {{ form.as_p }}
+            {% csrf_token %}
+                    <div class="block">
+                        <div class="box">
+                            <div class="container"style="width: 400px; margin-left: auto; margin-right: auto;">
+                                <input type="submit" value="ایجاد یادداشت " class="button is-success">
+                            </div>
+                        </div>
+                    </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

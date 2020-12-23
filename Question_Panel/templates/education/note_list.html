@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load jalali_tags %}
+{% for note in notes %}
+<div class="block">
+    <div class="box">
+        <div class="block">
+             <div class="box">
+                <div class="container">
+                    <h1 class="subtitle is-4" style="line-height:4em"><strong>{{ note.note_title }}</strong></h1>
+                </div>
+                    <div class="container">
+                        <p style="line-height:4em">{{ note.note_body | safe}}</p>
+                    </div>
+
+                    <div class="container">
+                        <p style="line-height:4em">این آموزش در تاریخ {{note.date_created|to_jalali:"%H:%M:%S _ %y/%m/%d" }} توسط {{ note.user.username }}  ایجاد شده است </p>
+                    </div>
+
+        </div>
+
+   </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+# like 176
