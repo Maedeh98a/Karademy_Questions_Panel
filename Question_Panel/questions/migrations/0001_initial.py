@@ -15,97 +15,330 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Answer',
+            name="Answer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('answer', models.TextField(null=True, verbose_name='پاسخ')),
-                ('created_time', models.DateTimeField(auto_now=True, null=True)),
-                ('updated_time', models.DateTimeField(auto_now=True, null=True)),
-                ('status', models.CharField(choices=[('published', 'انتشاریافته'), ('draft', 'پیش نویس')], default='published', max_length=12, null=True, verbose_name='وضعیت انتشار')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("answer", models.TextField(null=True, verbose_name="پاسخ")),
+                ("created_time", models.DateTimeField(auto_now=True, null=True)),
+                ("updated_time", models.DateTimeField(auto_now=True, null=True)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("published", "انتشاریافته"), ("draft", "پیش نویس")],
+                        default="published",
+                        max_length=12,
+                        null=True,
+                        verbose_name="وضعیت انتشار",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'پاسخ',
-                'verbose_name_plural': 'پاسخ ها',
-                'db_table': 'Answers',
+                "verbose_name": "پاسخ",
+                "verbose_name_plural": "پاسخ ها",
+                "db_table": "Answers",
             },
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category_name', models.CharField(max_length=100, null=True, verbose_name='نام دسته بندی')),
-                ('created_time', models.DateTimeField(auto_now_add=True, db_index=True, null=True, verbose_name=' تاریخ ایجاد')),
-                ('updated_time', models.DateTimeField(auto_now_add=True, db_index=True, null=True, verbose_name='تاریخ به روز رسانی')),
-                ('slug', models.SlugField(null=True)),
-                ('parent', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='questions.category', verbose_name='دسته بندی ها')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "category_name",
+                    models.CharField(
+                        max_length=100, null=True, verbose_name="نام دسته بندی"
+                    ),
+                ),
+                (
+                    "created_time",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        db_index=True,
+                        null=True,
+                        verbose_name=" تاریخ ایجاد",
+                    ),
+                ),
+                (
+                    "updated_time",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        db_index=True,
+                        null=True,
+                        verbose_name="تاریخ به روز رسانی",
+                    ),
+                ),
+                ("slug", models.SlugField(null=True)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="questions.category",
+                        verbose_name="دسته بندی ها",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'دسته بندی',
-                'verbose_name_plural': 'دسته بندیها',
-                'db_table': 'Category',
+                "verbose_name": "دسته بندی",
+                "verbose_name_plural": "دسته بندیها",
+                "db_table": "Category",
             },
         ),
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('question_title', models.CharField(max_length=200, null=True, verbose_name='عنوان سوال')),
-                ('slug', models.SlugField(null=True)),
-                ('question_text', models.TextField(null=True, verbose_name='متن سوال')),
-                ('created_time', models.DateTimeField(auto_now_add=True, db_index=True, null=True, verbose_name=' تاریخ ایجاد')),
-                ('updated_time', models.DateTimeField(auto_now_add=True, db_index=True, null=True, verbose_name='تاریخ به روز رسانی')),
-                ('status', models.CharField(choices=[('published', 'انتشاریافته'), ('draft', 'پیش نویس')], default='published', max_length=12, null=True, verbose_name='وضعیت انتشار')),
-                ('question_photo', models.ImageField(blank=True, null=True, upload_to='question/%Y/%m/%d', verbose_name='تصویر سوال')),
-                ('question_category', models.ManyToManyField(to='questions.Category', verbose_name='دسته بندی سوال')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='سوال کننده')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "question_title",
+                    models.CharField(
+                        max_length=200, null=True, verbose_name="عنوان سوال"
+                    ),
+                ),
+                ("slug", models.SlugField(null=True)),
+                ("question_text", models.TextField(null=True, verbose_name="متن سوال")),
+                (
+                    "created_time",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        db_index=True,
+                        null=True,
+                        verbose_name=" تاریخ ایجاد",
+                    ),
+                ),
+                (
+                    "updated_time",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        db_index=True,
+                        null=True,
+                        verbose_name="تاریخ به روز رسانی",
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("published", "انتشاریافته"), ("draft", "پیش نویس")],
+                        default="published",
+                        max_length=12,
+                        null=True,
+                        verbose_name="وضعیت انتشار",
+                    ),
+                ),
+                (
+                    "question_photo",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to="question/%Y/%m/%d",
+                        verbose_name="تصویر سوال",
+                    ),
+                ),
+                (
+                    "question_category",
+                    models.ManyToManyField(
+                        to="questions.Category", verbose_name="دسته بندی سوال"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="سوال کننده",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'سوال',
-                'verbose_name_plural': 'سوال ها',
-                'db_table': 'Questions',
+                "verbose_name": "سوال",
+                "verbose_name_plural": "سوال ها",
+                "db_table": "Questions",
             },
         ),
         migrations.CreateModel(
-            name='QuestionReport',
+            name="QuestionReport",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('report_choice', models.CharField(choices=[('inappropriate', 'نامناسب'), ('irrelevant', 'بی ربط'), ('Contains political words', 'حاوی الفاظ سیاسی'), ('Contains ads', 'تبلیغ'), ('other', 'دیگر')], max_length=30, null=True, verbose_name='گزینه های گزارش')),
-                ('report_description', models.TextField(blank=True, null=True, verbose_name='متن گزارش')),
-                ('report_date', models.DateTimeField(auto_now=True, verbose_name='تاریخ گزارش')),
-                ('report_count', models.IntegerField(blank=True, null=True, verbose_name='تعداد گزارش')),
-                ('reported_answer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='questions.answer', verbose_name='پاسخ گزارش شده')),
-                ('reported_question', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='questions.question', verbose_name='سوال گزارش شده')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='گزارش دهنده')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "report_choice",
+                    models.CharField(
+                        choices=[
+                            ("inappropriate", "نامناسب"),
+                            ("irrelevant", "بی ربط"),
+                            ("Contains political words", "حاوی الفاظ سیاسی"),
+                            ("Contains ads", "تبلیغ"),
+                            ("other", "دیگر"),
+                        ],
+                        max_length=30,
+                        null=True,
+                        verbose_name="گزینه های گزارش",
+                    ),
+                ),
+                (
+                    "report_description",
+                    models.TextField(blank=True, null=True, verbose_name="متن گزارش"),
+                ),
+                (
+                    "report_date",
+                    models.DateTimeField(auto_now=True, verbose_name="تاریخ گزارش"),
+                ),
+                (
+                    "report_count",
+                    models.IntegerField(
+                        blank=True, null=True, verbose_name="تعداد گزارش"
+                    ),
+                ),
+                (
+                    "reported_answer",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="questions.answer",
+                        verbose_name="پاسخ گزارش شده",
+                    ),
+                ),
+                (
+                    "reported_question",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="questions.question",
+                        verbose_name="سوال گزارش شده",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="گزارش دهنده",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'گزارش سوال ',
-                'verbose_name_plural': 'گزارش سوال ها',
+                "verbose_name": "گزارش سوال ",
+                "verbose_name_plural": "گزارش سوال ها",
             },
         ),
         migrations.CreateModel(
-            name='AnswerReport',
+            name="AnswerReport",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('report_choice', models.CharField(choices=[('inappropriate', 'نامناسب'), ('irrelevant', 'بی ربط'), ('Contains political words', 'حاوی الفاظ سیاسی'), ('Contains ads', 'تبلیغ'), ('other', 'دیگر')], max_length=30, null=True, verbose_name='گزینه های گزارش')),
-                ('report_description', models.TextField(blank=True, null=True, verbose_name='متن گزارش')),
-                ('report_date', models.DateTimeField(auto_now=True, verbose_name='تاریخ گزارش')),
-                ('report_count', models.IntegerField(blank=True, null=True, verbose_name='تعداد گزارش')),
-                ('reported_answer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='questions.answer', verbose_name='پاسخ گزارش شده')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='گزارش دهنده')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "report_choice",
+                    models.CharField(
+                        choices=[
+                            ("inappropriate", "نامناسب"),
+                            ("irrelevant", "بی ربط"),
+                            ("Contains political words", "حاوی الفاظ سیاسی"),
+                            ("Contains ads", "تبلیغ"),
+                            ("other", "دیگر"),
+                        ],
+                        max_length=30,
+                        null=True,
+                        verbose_name="گزینه های گزارش",
+                    ),
+                ),
+                (
+                    "report_description",
+                    models.TextField(blank=True, null=True, verbose_name="متن گزارش"),
+                ),
+                (
+                    "report_date",
+                    models.DateTimeField(auto_now=True, verbose_name="تاریخ گزارش"),
+                ),
+                (
+                    "report_count",
+                    models.IntegerField(
+                        blank=True, null=True, verbose_name="تعداد گزارش"
+                    ),
+                ),
+                (
+                    "reported_answer",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="questions.answer",
+                        verbose_name="پاسخ گزارش شده",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="گزارش دهنده",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'گزارش پاسخ',
-                'verbose_name_plural': 'گزارش های پاسخ ها',
+                "verbose_name": "گزارش پاسخ",
+                "verbose_name_plural": "گزارش های پاسخ ها",
             },
         ),
         migrations.AddField(
-            model_name='answer',
-            name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='questions.question', verbose_name='سوال'),
+            model_name="answer",
+            name="question",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="questions.question",
+                verbose_name="سوال",
+            ),
         ),
         migrations.AddField(
-            model_name='answer',
-            name='user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='پاسخ دهنده'),
+            model_name="answer",
+            name="user",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="پاسخ دهنده",
+            ),
         ),
     ]
