@@ -1,11 +1,22 @@
 from django.forms import ModelForm
-from .models import Question, Answer, AnswerReport, QuestionReport
+from .models import Category, Question, Answer, AnswerReport, QuestionReport, Tag
+
+
+class TagForm(ModelForm):
+    class Meta:
+        model = Tag
+        fields = ["tag_name"]
 
 
 class QuestionForm(ModelForm):
     class Meta:
         model = Question
-        fields = ["question_title", "question_text", "question_category"]
+        fields = [
+            "question_title",
+            "question_text",
+            "question_category",
+            "question_tag",
+        ]
 
 
 class AnswerForm(ModelForm):
