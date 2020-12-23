@@ -2,27 +2,19 @@
 {% block content %}
 {% load jalali_tags %}
 
+<div class="box">
+    <h1> سوالات قسمت <strong>{{ categories.category_name }}</strong> </h1>
+</div>
+<!--
+think to make beautiful
+ -->
+{% for question in categories.questions.all %}
 
-    <div class="box">
-        <div class="box">
-        <div class="container"style="width: 400px; margin-left: auto; margin-right: auto;">
-            <h1 class="title is-1" ><a href="{% url 'questions:create_question' %}" class="button is-primary is-focused" style="text-align:center">سوالت را بپرس</a>
-            </h1>
-            </div>
-        </div>
-    </div>
-
-{% for question in questions %}
 <div class="block">
     <div class="box">
         <div class="columns">
 
-            <div class="column is-one-quarters">
-                <div class="box">
-
-                    <p>  دسته بندی: {{ question.question_category}}
-</p>
-                </div>
+            <div class="column">
                 <div class="box">
                     <p>برچسب ها:</p>
                     {% for tag in question.question_tag.all %}
@@ -36,9 +28,9 @@
             <div class="column is-three-quarters">
                 <div class="box">
                 <h1 class="subtitle is-4" style="line-height:4em"><strong>{{ question.question_title }}</strong></h1>
-                <p style="line-height:6em">{{ question.question_text|truncatewords:50|safe }}</p>
+                <p style="line-height:6em">{{ question.question_text|safe }}</p>
                 <p style="line-height:6em"></p>
-                </div>
+
 <!--                  <div class="container">-->
 <!--                        <form method="post" action="{% url 'questions:blogpost_like1' %}" class="ui form">-->
 <!--                            {% csrf_token %}-->
@@ -63,7 +55,7 @@
 {% endif %}
 
 </div>
-
+                </div>
         </div>
 
 

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="block" style="width: 400px; margin-left: auto; margin-right: auto;">
+    <div class="box">
+        <p style="line-height:4em">آیا از حذف پاسخ  «{{ item }}» اطمینان دارید؟ </p>
+            <form action="{% url 'questions:delete_question' item.id %}" method="post">
+                {% csrf_token %}
+                <a href="{% url 'questions:question_list' %}" class="button is-primary">لغو کردن</a>
+                <input  type="submit" value="حذف" class="button is-danger">
+            </form>
+    </div>
+</div>
+{% endblock %}

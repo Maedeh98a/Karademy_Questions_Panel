@@ -5,14 +5,66 @@
 
 <div class="block">
     <div class="box">
+        <div class="container">
+            <h1 class="title is-8">{{ question.question_title }}</h1>
+            <p style="line-height:4em">{{ question.question_text|safe }}</p>
+        </div>
+         {% if user.is_authenticated %}
+        <div class="container">
+            <p style="line-height:4em">این سوال در تاریخ {{ question.created_time }} توسط {{ question.user.username }}  پرسیده شده است </p>
 
-        <p>{{ question.question_title }}</p>
-        {% for each_answer in answers  %}
-           <div class="box">
-                 <p>{{ each_answer.answer_body }}</p>
 
-           </div>
-{% endfor%}
+  <form action="{% url 'questions:blogpost_like' object.id %}" method="POST">
+    {% csrf_token %}
+
+    {% if post_is_liked %}
+    <button type="submit" name="question_id" value="{{object.id}}" class="button is-light"> به درد نمیخورد</button>
+    {% else %}
+    <button type="submit" name="question_id" value="{{object.id}}" class="button is-success" > مفید بود</button>
+    {% endif %}
+  </form>
+{% else %}
+  <a class="btn btn-outline-info" href="{% url 'account:login' %}?next={{request.path}}">برای ثبت این گزینه باید وارد شوید</a><br>
+{% endif %}
+<p class="content is-medium">مفید برای {{ number_of_likes }} نفر</p>
+
+
+            <a href="{% url 'questions:create_answer' question.id %}" class="button is-primary"> پاسخ</a>
+                        <a href="{% url 'questions:report_question' question.id %}" class="button is-warning">گزارش</a>
+
+{% if request.user.username == question.user.username %}
+            <a href="{% url 'questions:update_question' question.id %}" class="button is-info">به روز رسانی</a>
+            <a href="{% url 'questions:delete_question' question.id %}" class="button is-danger">حذف سوال</a>
+<!--            <p>سوالم پاسخ داده شده است : {{question.answered }}</p>-->
+{% endif %}
+ </div>
     </div>
 </div>
+<div class="box">
+    <div class="container">
+        <h1  class="title">پاسخ کاربران</h1>
+    </div>
+</div>
+
+    {% for answer in question.answers.all %}
+<div class="block">
+    <div class="box">
+
+        <div class="container">
+            <p>{{ answer.answer_body|safe }}</p>
+        </div>
+        <div class="container">
+            <p style="line-height:4em">این سوال در تاریخ {{ answer.updated_time }} توسط {{ answer.user.username }}  پاسخ داده شده است </p>
+            <a href="{% url 'questions:report_answer' answer.id %}" class="button is-warning">گزارش</a>
+            {% if request.user.username == answer.user.username %}
+            <a href="{% url 'questions:update_answer' answer.id %}" class="button is-info">به روز رسانی</a>
+            <a href="{% url 'questions:delete_answer' answer.id %}" class="button is-danger">حذف </a>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+   {% endfor %}
+
 {% endblock %}

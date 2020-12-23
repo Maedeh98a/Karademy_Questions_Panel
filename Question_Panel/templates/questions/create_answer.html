@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load jalali_tags %}
+
+<div class="block" style="width: 1200px; margin-left: auto; margin-right: auto;">
+    <div class="box">
+<div class="block">
+        <div class="box">
+            <h1>عنوان سوال : </h1>
+            <p style="line-height:4em">{{ questions.question_title }}</p>
+            <h1>متن سوال:</h1>
+            <p style="line-height:4em">{{ questions.question_text|safe}}</p>
+
+             <p style="line-height:4em">
+                 این سوال در تاریخ    {{ question.created_time|to_jalali:'%y/%m/%d _ %H:%M:%S' }} توسط {{ questions.user.get_full_name }} پرسیده شده است
+
+            </p>
+        </div>
+        </div>
+</div>
+
+    <div class="box">
+        <form method="post">
+            {{ form.media }}
+            {{ form.as_p }}
+            {% csrf_token %}
+                    <div class="block">
+                        <div class="box">
+                            <div class="container"style="width: 400px; margin-left: auto; margin-right: auto;">
+                                <input type="submit" value="ثبت پاسخ" class="button is-success">
+                            </div>
+                        </div>
+                    </div>
+</form>
+    </div>
+    </div>
+</div>
+
+{% endblock %}

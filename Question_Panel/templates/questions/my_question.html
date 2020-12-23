@@ -1,37 +1,74 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load jalali_tags %}
 
+<div class="block">
+    <div class="box">
+        <div class="container"style="width: 400px; margin-left: auto; margin-right: auto;">
+            <h1 class="title" >سوالات {{ request.user.get_full_name }}</h1>
 
+        </div>
+    </div>
+</div>
 {% for question in questions %}
 <div class="block">
     <div class="box">
-        <div class="block">
-            <div class="box">
-                <div class="container">
-                    <h1 class="subtitle is-4"><strong>{{ question.question_title }}</strong></h1>
+        <div class="columns">
+
+            <div class="column is-one-quarters">
+                <div class="box">
+
+                    <p>  دسته بندی: {{ question.question_category}}
+</p>
                 </div>
-                <div class="container">
-                    <p style="line-height:2em">{{ question.question_text }}</p>
+                <div class="box">
+                    <p>برچسب ها:</p>
+                    {% for tag in question.question_tag.all %}
+                    <p>{{ tag.tag_name }}</p>
+                   {% endfor %}
                 </div>
-                <p>{{ question.question_tag.tag_name }}</p>
-             <div class="container">
-                   <p style="line-height:4em">این سوال در تاریخ {{ question.created_time }} توسط {{ question.user.username }}  پرسیده شده است </p>
-             </div>
-             <div class="container">
-                   <a href="#" class="button is-primary">پاسخ</a>
+                <div class="box">
+                    <a href="{% url 'questions:question_detail' question.id %}" class="button is-primary">  نمایش پاسخ ها </a>
+                </div>
+            </div>
+            <div class="column is-three-quarters">
+                <div class="box">
+                <h1 class="subtitle is-4" style="line-height:4em"><strong>{{ question.question_title }}</strong></h1>
+                <p style="line-height:6em">{{ question.question_text|truncatewords:50|safe }}</p>
+                <p style="line-height:6em"></p>
+                </div>
+<!--                  <div class="container">-->
+<!--                        <form method="post" action="{% url 'questions:blogpost_like1' %}" class="ui form">-->
+<!--                            {% csrf_token %}-->
+<!--                            <input type="hidden" name="question_id" value="{{ question.id }}">-->
+<!--                            {% if user not in question.question_like.all %}-->
+<!--                            <button class="ui button positive" type="submit">like</button>-->
+<!--                            {% else %}-->
+<!--                            <button class="ui button negative" type="submit">unlike</button>-->
+
+<!--                            {% endif %}-->
+<!--                        </form>-->
+<!--                      <p>{{ question.question_like.count }} likes</p>-->
+<!--                    </div>-->
+
+                   <div class="box">
+                        <a href="{% url 'questions:create_answer' question.id %}" class="button is-primary"> پاسخ</a>
+                        <a href="{% url 'questions:report_question' question.id %}" class="button is-warning">گزارش</a>
+
 {% if request.user.username == question.user.username %}
             <a href="{% url 'questions:update_question' question.id %}" class="button is-info">به روز رسانی</a>
             <a href="{% url 'questions:delete_question' question.id %}" class="button is-danger">حذف سوال</a>
 {% endif %}
+
+                </div>
         </div>
+
+
+   </div>
     </div>
-</div>
-        <div class="block">
-            <div class="box">
-                <h1 class="subtitle">پاسخ کاربران</h1>
-            </div>
-        </div>
+
     </div>
-</div>
 {% endfor %}
 {% endblock %}
+
+

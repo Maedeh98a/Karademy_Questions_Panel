@@ -1,0 +1,8 @@
+<div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">دسته بندی ها:</a>
+      <div class="navbar-dropdown">
+          {% for cat in category %}
+          <a class="navbar-item" href="{% url 'questions:category' cat.slug %}">{{ cat.category_name }}</a>
+          {% endfor %}
+      </div>
+    </div>

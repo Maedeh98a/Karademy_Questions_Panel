@@ -1,18 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="block" style="width: 800px; margin-left: auto; margin-right: auto;">
+<div class="block" style="width: 1200px; margin-left: auto; margin-right: auto;">
     <div class="box">
         <h1 class="title is-3" style="text-align:center"><strong>با طرح سوالت از اصغر زودتر به جواب برس</strong></h1>
     </div>
 </div>
 
-<div class="block" style="width: 800px; margin-left: auto; margin-right: auto;">
+<div class="block" style="width: 1200px; margin-left: auto; margin-right: auto;">
     <div class="box">
         <form action="" method="post">
              {% csrf_token %}
                 <div class="field">
-                {{form.as_p}}
+                    {{form.media}}
+                    <p style="line-height:4em"> {{form.question_title.label}} </p>
+                    <p>{{form.question_title}} </p>
+                    <p style="line-height:4em"> {{form.question_text.label}} {{form.question_text}} </p>
+                    <div class="columns">
+                        <div class="column">
+                            <p style="line-height:12em"> {{form.question_category.label}} {{form.question_category}} </p>
+                        </div>
+                        <div class="column">
+                            <p style="line-height:8em"> {{form.question_tag.label}} {{form.question_tag}} </p>
+                        </div>
+                    </div>
+<p style="line-height:4em">اگر برچسب مورد نظر خود را نیافتی ، در این جا آن را وارد کن </p>
+
+                    {{tag_form.as_p}}
                 </div>
                     <div class="block">
                         <div class="box">
