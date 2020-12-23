@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
 <div class="block">
   <div class="box">
     <div class="container">
@@ -9,18 +10,63 @@
 </div>
 
 <div class="columns">
+    <div class="column is-one-quarter">
+        <div class="box">
+            <div class="container">
+                <img src="{{ profile.avatar.url }}">
+            </div>
+        </div>
+        <div class="box">
+            <div class="container">
+                <a href="{% url 'questions:create_question' %}" class="button is-primary">سوال بپرس</a>
+            </div>
+        </div>
+        <div class="box">
+            <div class="container">
+                <a href="{% url 'questions:my_question' %}" class="button is-info">سوالات من</a>
+            </div>
+        </div>
+        <div class="box">
+            <div class="container">
+                <a href="{% url 'education:create_note' %}" class="button is-warning">ایجاد یادداشت </a>
+            </div>
+        </div>
+        <div class="box">
+            <div class="container">
+                <a href="{% url 'education:my_note' %}" class="button is-success">یادداشت های من </a>
+            </div>
+        </div>
+
+    </div>
+
+
+
   <div class="column is-three-quarter">
     <div class="block">
       <div class="box">
         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          {{ user_form.as_p}}
-          {{profile_form.as_p}}
+
+            <div class="field">
+                    {{profile_form.media}}
+                    <p style="line-height:2em"> {{profile_form.first_name.label}} </p>
+                    <p>{{profile_form.first_name}} </p>
+                    <p style="line-height:2em"> {{user_form.first_name.label}} </p>
+                    <p>{{user_form.first_name}} </p>
+                    <p style="line-height:2em"> {{user_form.last_name.label}} </p>
+                    <p>{{user_form.last_name}} </p>
+                    <p style="line-height:2em"> {{user_form.email.label}} </p>
+                    <p>{{user_form.email}} </p>
+                    <p style="line-height:12em"> {{profile_form.gender.label}} {{profile_form.gender}} </p>
+                    <p style="line-height:8em"> {{profile_form.interests.label}} {{profile_form.interests}} </p>
+                    <p style="line-height:2em"> {{profile_form.about_me.label}} </p>
+                    <p>{{profile_form.about_me|safe}} </p>
+            </div>
           <div class="block">
-    <div class="box">
-        <div class="container"style="width: 400px; margin-left: auto; margin-right: auto;">
-           <p><input type="submit" value="ذخیره سازی تغییرات" class="button is-success"></p>
-        </div>
+             <div class="box">
+                <div class="container"style="width: 400px; margin-left: auto; margin-right: auto;">
+                    <p><input type="submit" value="ذخیره سازی تغییرات" class="button is-success"></p>
+                </div>
 
     </div>
 </div>
@@ -29,13 +75,7 @@
       </div>
     </div>
   </div>
-  <div class="column is-one-quarter">
-    <a href="{% url 'questions:create_question' %}" class="button is-primary">سوال بپرس</a>
-    <a href="{% url 'questions:my_question' %}" class="button is-info">سوالات من</a>
-
-  </div>
 </div>
-
 
 
 
